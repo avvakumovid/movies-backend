@@ -1,7 +1,10 @@
+import AuthService from '../service/authService.js'
+
 class AuthController {
     async getAllUsrs(req, res) {
         try {
-            res.json('server work')
+            const users = AuthService.getAllUsers()
+            return res.json(users)
         } catch (e) {
 
         }
