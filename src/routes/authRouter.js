@@ -1,11 +1,17 @@
 import {Router} from "express";
 import AuthController from '../controller/authController.js'
+import {check} from "express-validator";
+import authMiddleware from "../middleware/authMiddleware.js";
+import roleMiddleware from "../middleware/roleMiddleware.js";
 
 
 const router = new Router()
 
-router.post('/registration')
-router.post('/login')
-router.get('/users', AuthController.getAllUsrs)
+router.post('/registration', [
+check('username', 'Имя пользлваьеля не может быть пустым').notEmpty(),
+    check('password', 'Пароль должен быть больше 4 символов').isLength({min: 4})
+], AuthController.registration)
+router.post('/login', AuthController.login)
+router.get('/users', authMiddleware, AuthController.getAllUsrs)
 
 export default router
