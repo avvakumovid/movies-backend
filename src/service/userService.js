@@ -1,11 +1,11 @@
 import User from "../model/User.js";
 
 
-class AuthService {
+class UserService {
 
     async createUser(username, password, roles) {
         try {
-            const user = new User(username, password, roles)
+            const user = new User({username, password, roles: [roles.value]})
             await user.save()
             return {status: 200, message: 'Пользователь создан'}
         } catch (e) {
@@ -24,13 +24,6 @@ class AuthService {
         return users
     }
 
-    async registration() {
-        try {
-
-        } catch (e) {
-
-        }
-    }
 }
 
-export default new AuthService()
+export default new UserService()

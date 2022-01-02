@@ -1,5 +1,6 @@
 import {Router} from "express";
 import AuthController from '../controller/authController.js'
+import UserController from '../controller/userController.js'
 import {check} from "express-validator";
 import authMiddleware from "../middleware/authMiddleware.js";
 import roleMiddleware from "../middleware/roleMiddleware.js";
@@ -12,6 +13,6 @@ check('username', 'Имя пользлваьеля не может быть пу
     check('password', 'Пароль должен быть больше 4 символов').isLength({min: 4})
 ], AuthController.registration)
 router.post('/login', AuthController.login)
-router.get('/users', authMiddleware, AuthController.getAllUsrs)
+
 
 export default router

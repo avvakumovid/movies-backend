@@ -1,11 +1,10 @@
 import Role from "../model/Role.js";
 
-class UserService {
+class RoleService {
     async getRole(value){
-        const role = await Role.findOne({value})
+        const role = await Role.findOne({value: value})
         return role
-
     }
 }
 
-export default new UserService()
+export default new RoleService()
