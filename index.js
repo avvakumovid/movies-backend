@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import authRouter from "./src/routes/authRouter.js";
 import usersRouter from "./src/routes/usersRouter.js"
+import movieRouter from "./src/routes/movieRouter.js";
 
 const PORT = process.env.PORT || 5000
 
@@ -10,7 +11,7 @@ const app = express()
 
 app.use(express.json())
 app.use('/auth', authRouter)
-app.use('/api', [usersRouter])
+app.use('/api', [usersRouter, movieRouter])
 
 const start = async () => {
     try {

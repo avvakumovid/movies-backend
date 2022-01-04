@@ -5,7 +5,10 @@ import UserController from "../controller/userController.js";
 
 const usersRouter = new Router()
 
-usersRouter.get('/users', authMiddleware, roleMiddleware('ADMIN'), UserController.getAllUsrs)
+usersRouter.get('/users',
+    // authMiddleware,
+    // roleMiddleware('ADMIN'),
+    UserController.getAllUsrs)
 usersRouter.get('/user/:username', UserController.getUser)
 usersRouter.post('/user/role', UserController.addRoleToUser)
 
