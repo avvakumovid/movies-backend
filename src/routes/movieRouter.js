@@ -7,4 +7,5 @@ movieRouter.get('/moviesOld', MoviesController.getAllMovies)
 movieRouter.get('/movies/count', MoviesController.getMoviesCount)
 movieRouter.get('/movies', MoviesController.getMovies)
 
+
 export default movieRouter

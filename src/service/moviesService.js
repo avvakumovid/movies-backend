@@ -4,33 +4,44 @@ class MoviesService {
 
     itemInPage = 20;
 
-   async getAllMovies() {
+    async getAllMovies() {
         try {
-            const movies = await Movie.find().limit(4);
-
+            const movies = await Movie.find({genre_ids: 28}).limit(4);
             return movies
-        }catch (e) {
+        } catch (e) {
             console.log(e)
-          //  throw new Express.Error(e)
+            //  throw new Express.Error(e)
         }
     }
 
-    async getMoviesByPage(page){
-       try {
-           const movies = await  Movie.find().skip(page * this.itemInPage).limit(this.itemInPage)
-           const totalPage = await this.getMoviesCount() / 20 - 1
-           return {totalPage, itemInPage: this.itemInPage, movies}
-       }catch (e) {
-           console.log(e)
-          // throw new Express.Error(e)
-       }
+    async getMoviesByPage(page, filter) {
+        try {
+
+            const movies = await Movie.find(filter).skip(page * this.itemInPage).limit(this.itemInPage)
+            const totalPage = Math.ceil(await this.getMoviesCount(filter) / 20 - 1)
+            return {totalPage, itemInPage: this.itemInPage, movies}
+        } catch (e) {
+            console.log(e)
+            // throw new Express.Error(e)
+        }
     }
 
-   async getMoviesCount(){
+    async getMoviesByGnere(genreId){
         try {
-            const movieCount = await Movie.find().count()
+            const movies = await Movie.find().skip(page * this.itemInPage).limit(this.itemInPage)
+            const totalPage = await this.getMoviesCount({genre_ids: genreId}) / 20 - 1
+            return {totalPage, itemInPage: this.itemInPage, movies}
+        } catch (e) {
+            console.log(e)
+            // throw new Express.Error(e)
+        }
+    }
+
+    async getMoviesCount(filter = null) {
+        try {
+            const movieCount = await Movie.find(filter).count()
             return movieCount
-        }catch (e) {
+        } catch (e) {
             console.log(e)
             //throw new Express.Error(e)
         }

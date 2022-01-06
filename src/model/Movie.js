@@ -3,8 +3,8 @@ import  mongoose from "mongoose";
 const Movie = new mongoose.Schema({
     adult: {type: Boolean},
     backdrop_path: {type: String, required: true},
-    genre_ids: [{type: String, ref: 'genre'}],
-    id: {type: String, unique: true, required: true},
+    genre_ids: [{type: Number, ref: 'genre'}],
+    id: {type: Number, unique: true, required: true},
     original_language: {type: String, unique: true, required: true},
     original_title: {type: String, unique: true, required: true},
     popularity: {type: String, unique: true, required: true},
