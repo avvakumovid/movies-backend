@@ -11,6 +11,18 @@ class MoviesController {
         }
     }
 
+    async getMovies(req, res) {
+        try {
+
+            const {page} = req.query;
+
+            const movies = await MoviesService.getMoviesByPage(page)
+            return res.json(movies)
+        } catch (e) {
+            console.log(e)
+            throw new Express.Error(e)
+        }
+    }
    async getMoviesCount(req, res) {
         try {
             const moviesCount = await MoviesService.getMoviesCount()

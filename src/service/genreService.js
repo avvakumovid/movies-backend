@@ -8,7 +8,7 @@ class GenreService {
             return genres
         } catch (e) {
             console.log(e)
-            throw new Express.Error(e)
+          //  throw new Express.Error(e)
         }
     }
 
@@ -21,7 +21,7 @@ class GenreService {
             return genre
         } catch (e) {
             console.log(e)
-            throw new Express.Error(e)
+           // throw new Express.Error(e)
         }
     }
 }
