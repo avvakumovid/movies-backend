@@ -45,6 +45,33 @@ class UserController {
             return res.status(403).json({message: 'Пользователь не найден'})
         }
     }
+
+    async getUserById(req, res) {
+        try {
+            const userId = req.user.id
+            console.log(userId)
+            if (!userId) {
+                return res.status(403).json({message: 'Не указан id'})
+            }
+            const user = await UserService.getUserById(userId)
+            return res.json(user);
+        } catch (e) {
+            console.log(e)
+            return res.status(403).json({message: 'Пользователь не найден'})
+        }
+    }
+
+    async addMoviesToWatchList(req, res){
+      try {
+          const {userId, movieId} = req.body;
+          const response = await UserService.addMoviesToWatchList(userId, movieId)
+          return res.json(response)
+
+      }catch (e) {
+          console.log(e)
+          return res.status(403).json({message: e})
+      }
+    }
 }
 
 export default new UserController()

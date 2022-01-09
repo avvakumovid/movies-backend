@@ -13,6 +13,7 @@ function generateAccessToken(id, role) {
 class AuthController {
 
     async registration(req, res) {
+
         const error = validationResult(req)
         if (!error.isEmpty()) {
             return res.status(400).json({message: 'Ошибка при регистрации', error})
@@ -31,14 +32,18 @@ class AuthController {
 
     async login(req, res) {
         try {
+
+            console.log(req.body)
             const {username, password} = req.body
+
             const user = await UserService.getUser(username)
             if (!user) {
                 return res.status(400).json({message: `Пользователь ${username} не найден`})
             }
-            const validatePassword = bcrypt.compare(password, user.password)
+            const validatePassword = bcrypt.compareSync(password, user.password)
+            console.log('validatePassword',validatePassword)
             if (!validatePassword) {
-                return res.status(400).json({message: `НЕверный пароль  `})
+                return res.status(400).json({message: `Неверный пароль`})
             }
             const token = generateAccessToken(user._id, user.roles)
             return res.json(token)

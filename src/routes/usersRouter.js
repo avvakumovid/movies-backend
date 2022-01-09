@@ -6,10 +6,14 @@ import UserController from "../controller/userController.js";
 const usersRouter = new Router()
 
 usersRouter.get('/users',
-    // authMiddleware,
+    authMiddleware,
     // roleMiddleware('ADMIN'),
     UserController.getAllUsrs)
 usersRouter.get('/user/:username', UserController.getUser)
+usersRouter.get('/userinfo', authMiddleware, UserController.getUserById)
 usersRouter.post('/user/role', UserController.addRoleToUser)
+usersRouter.post('/user/watchlist', UserController.addMoviesToWatchList)
+
+
 
 export default usersRouter

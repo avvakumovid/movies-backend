@@ -1,4 +1,5 @@
 import User from "../model/User.js";
+import Movie from "../model/Movie.js"
 
 
 class UserService {
@@ -19,9 +20,31 @@ class UserService {
         return user
     }
 
+    async getUserById(id) {
+        const user = await User.findById(id)
+        return user
+    }
+
     async getAllUsers() {
         const users = await User.find()
         return users
+    }
+
+    async addMoviesToWatchList(userId, movieId){
+        const user = await this.getUserById(userId)
+        // console.log('user', user)
+        if(!user){
+            return
+        }
+        const movie = await Movie.findById(movieId);
+        // console.log('movie', movie)
+        if(!movie){
+            return
+        }
+        user.watchlist.push(movie)
+        await user.save()
+
+        return {message: 'Фильм добавлен'}
     }
 
 }

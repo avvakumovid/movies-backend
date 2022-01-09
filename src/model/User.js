@@ -3,7 +3,8 @@ import mongoose from 'mongoose'
 const User = new mongoose.Schema({
     username: {type: String, unique: true, required: true},
     password: {type: String, required: true},
-    roles: [{type: String, ref: 'role'}]
+    roles: [{type: String, ref: 'role'}],
+    watchlist: [{type: mongoose.Schema.Types.ObjectId, ref: 'movie'}]
 })
 
 export default mongoose.model('user', User)
