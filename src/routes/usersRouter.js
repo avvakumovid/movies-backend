@@ -11,7 +11,7 @@ usersRouter.get('/users',
     UserController.getAllUsrs)
 usersRouter.get('/user/:username', UserController.getUser)
 usersRouter.get('/userinfo', authMiddleware, UserController.getUserById)
-usersRouter.get('/usermovie', authMiddleware, UserController.getUserMovie)
+usersRouter.get('/usermovie', authMiddleware, UserController.getUserWatchlist)
 usersRouter.post('/user/role', UserController.addRoleToUser)
 usersRouter.post('/user/watchlist', UserController.addMoviesToWatchList)
 

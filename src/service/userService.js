@@ -25,6 +25,11 @@ class UserService {
         return user
     }
 
+    async getUserWatchlist(id) {
+        const {watchlist} = await User.findById(id).populate('watchlist')
+        return watchlist
+    }
+
     async getAllUsers() {
         const users = await User.find()
         return users

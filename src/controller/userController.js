@@ -61,19 +61,31 @@ class UserController {
             return res.status(403).json({message: 'Пользователь не найден'})
         }
     }
-    async getUserMovie(req, res) {
+    async getUserWatchlist(req, res) {
         try {
-            const watchlist = req.user.watchlist
-            console.log(watchlist)
-            if (!watchlist) {
+            const userId = req.user.id
+            console.log(userId)
+            if (!userId) {
                 return res.status(403).json({message: 'Не указан id'})
             }
-            const user = await MoviesService.getWatchlist(watchlist)
+            const user = await UserService.getUserWatchlist(userId)
             return res.json(user);
         } catch (e) {
             console.log(e)
             return res.status(403).json({message: 'Пользователь не найден'})
         }
+        // try {
+        //     const watchlist = req.user.watchlist
+        //     console.log(watchlist)
+        //     if (!watchlist) {
+        //         return res.status(403).json({message: 'Не указан id'})
+        //     }
+        //     const user = await MoviesService.getWatchlist(watchlist)
+        //     return res.json(user);
+        // } catch (e) {
+        //     console.log(e)
+        //     return res.status(403).json({message: 'Пользователь не найден'})
+        // }
     }
 
     async addMoviesToWatchList(req, res){

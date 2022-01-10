@@ -38,7 +38,7 @@ class MoviesService {
     }
     async getWatchlist(watchlist){
         try {
-            const movies = await Movie.find().skip(0).limit(this.itemInPage)
+            const movies = await Movie.find({watchlist}).skip(0).limit(this.itemInPage)
             const totalPage = await this.getMoviesCount({watchlist}) / 20 - 1
             return {totalPage, itemInPage: this.itemInPage, movies}
         } catch (e) {
