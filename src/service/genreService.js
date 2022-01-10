@@ -4,7 +4,6 @@ class GenreService {
     async getAllGenre() {
         try {
             const genres = await Genre.find()
-            console.log('TUT', genres)
             return genres
         } catch (e) {
             console.log(e)

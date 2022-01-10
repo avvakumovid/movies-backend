@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken'
 import {secret} from "../config/config.js";
 import bcrypt from 'bcryptjs'
 
-function generateAccessToken(id, role) {
-    const payload = {id, role}
+function generateAccessToken(id, role, watchlist) {
+    const payload = {id, role, watchlist}
     return jwt.sign(payload, secret.key, {expiresIn: '24h'})
 }
 
@@ -21,7 +21,7 @@ class AuthController {
         const {username, password} = req.body;
         const condidate = await UserService.getUser(username)
         if (condidate) {
-            return res.status(400).json({message: 'Пользователь с таим username уже существует'})
+            return res.status(400).json({message: 'Пользователь с таким username уже существует'})
         }
         const hashPawword = bcrypt.hashSync(password, 7)
         //const role = new Role();
@@ -45,7 +45,7 @@ class AuthController {
             if (!validatePassword) {
                 return res.status(400).json({message: `Неверный пароль`})
             }
-            const token = generateAccessToken(user._id, user.roles)
+            const token = generateAccessToken(user._id, user.roles, user.watchlist)
             return res.json(token)
         } catch (e) {
             console.log(e)

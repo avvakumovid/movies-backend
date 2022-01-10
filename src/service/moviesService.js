@@ -36,6 +36,16 @@ class MoviesService {
             // throw new Express.Error(e)
         }
     }
+    async getWatchlist(watchlist){
+        try {
+            const movies = await Movie.find().skip(0).limit(this.itemInPage)
+            const totalPage = await this.getMoviesCount({watchlist}) / 20 - 1
+            return {totalPage, itemInPage: this.itemInPage, movies}
+        } catch (e) {
+            console.log(e)
+            // throw new Express.Error(e)
+        }
+    }
 
     async getMoviesCount(filter = null) {
         try {
@@ -44,6 +54,15 @@ class MoviesService {
         } catch (e) {
             console.log(e)
             //throw new Express.Error(e)
+        }
+    }
+
+    async getMoviesById(id){
+        try {
+            let movie = await Movie.findById(id);
+            return movie
+        }catch (e) {
+            console.log(e)
         }
     }
 

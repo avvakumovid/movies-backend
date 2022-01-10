@@ -13,7 +13,6 @@ export default function (req, res, next) {
         }
         const decodedData = jwt.verify(token, secret.key)
         req.user = decodedData
-        console.log(req.user)
         next()
     } catch (e) {
         console.log(e)

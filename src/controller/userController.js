@@ -1,5 +1,6 @@
 import UserService from "../service/userService.js";
 import RoleService from "../service/roleService.js"
+import MoviesService from "../service/moviesService.js"
 import {json} from "express";
 
 class UserController {
@@ -60,10 +61,25 @@ class UserController {
             return res.status(403).json({message: 'Пользователь не найден'})
         }
     }
+    async getUserMovie(req, res) {
+        try {
+            const watchlist = req.user.watchlist
+            console.log(watchlist)
+            if (!watchlist) {
+                return res.status(403).json({message: 'Не указан id'})
+            }
+            const user = await MoviesService.getWatchlist(watchlist)
+            return res.json(user);
+        } catch (e) {
+            console.log(e)
+            return res.status(403).json({message: 'Пользователь не найден'})
+        }
+    }
 
     async addMoviesToWatchList(req, res){
       try {
           const {userId, movieId} = req.body;
+          console.log(userId,movieId)
           const response = await UserService.addMoviesToWatchList(userId, movieId)
           return res.json(response)
 
