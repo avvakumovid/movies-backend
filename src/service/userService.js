@@ -57,6 +57,29 @@ class UserService {
 
         return {message: 'Фильм добавлен'}
     }
+    async deleteMoviesFromWatchList(userId, movieId){
+        const user = await this.getUserById(userId)
+        if(!user){
+            throw new Error('Пользщователь не найден')
+        }
+        const movie = await Movie.findById(movieId);
+        if(!movie){
+            throw new Error('Фильм не найден')
+        }
+        let findedMovie = user.watchlist.find(m => m.equals(movie._id))
+        if(!(findedMovie)){
+            console.log('nop')
+            throw new Error('Фильма нет в списке')
+        }
+        console.log('bs')
+        let idMovie = movie._id
+        console.log(idMovie)
+        User.findByIdAndUpdate(
+            userId,
+            { $pull: { 'watchlist': movie._id } },function(err,model){});
+
+         return {message: 'Фильм удалён'}
+    }
 
 }
 

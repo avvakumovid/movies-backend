@@ -12,8 +12,11 @@ usersRouter.get('/users',
 usersRouter.get('/user/:username', UserController.getUser)
 usersRouter.get('/userinfo', authMiddleware, UserController.getUserById)
 usersRouter.get('/usermovie', authMiddleware, UserController.getUserWatchlist)
+
 usersRouter.post('/user/role', UserController.addRoleToUser)
 usersRouter.post('/user/watchlist', UserController.addMoviesToWatchList)
+
+usersRouter.delete('/user/delete/', UserController.deleteMoviesFromWatchList)
 
 
 
