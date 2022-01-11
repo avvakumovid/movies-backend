@@ -10,12 +10,11 @@ class UserController {
         if(!user){
             return res.status(403).json({message: 'Пользователь не найден'})
         }
-        console.log('USER', user)
+
         const findRole = await RoleService.getRole(role)
         if(!findRole){
             return res.status(403).json({message: 'Роль не найдена'})
         }
-        console.log('ROLE', findRole)
         if(user.roles.includes(findRole.value)){
             return res.json({message: 'пользователь уже имеет такую роль'})
         }
@@ -64,7 +63,6 @@ class UserController {
     async getUserWatchlist(req, res) {
         try {
             const userId = req.user.id
-            console.log(userId)
             if (!userId) {
                 return res.status(403).json({message: 'Не указан id'})
             }
@@ -74,30 +72,17 @@ class UserController {
             console.log(e)
             return res.status(403).json({message: 'Пользователь не найден'})
         }
-        // try {
-        //     const watchlist = req.user.watchlist
-        //     console.log(watchlist)
-        //     if (!watchlist) {
-        //         return res.status(403).json({message: 'Не указан id'})
-        //     }
-        //     const user = await MoviesService.getWatchlist(watchlist)
-        //     return res.json(user);
-        // } catch (e) {
-        //     console.log(e)
-        //     return res.status(403).json({message: 'Пользователь не найден'})
-        // }
     }
 
     async addMoviesToWatchList(req, res){
       try {
           const {userId, movieId} = req.body;
-          console.log(userId,movieId)
           const response = await UserService.addMoviesToWatchList(userId, movieId)
           return res.json(response)
 
       }catch (e) {
-          console.log(e)
-          return res.status(403).json({message: e})
+          console.log("error", e)
+          return res.status(403).json({message: e.message})
       }
     }
 }

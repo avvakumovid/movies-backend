@@ -39,13 +39,19 @@ class UserService {
         const user = await this.getUserById(userId)
         // console.log('user', user)
         if(!user){
-            return
+            throw new Error('Пользщователь не найден')
         }
         const movie = await Movie.findById(movieId);
         // console.log('movie', movie)
         if(!movie){
-            return
+            throw new Error('Фильм не найден')
         }
+
+        if(user.watchlist.find(m => m.equals(movie._id))){
+            throw new Error('Фильм уже есть в списке')
+        }
+
+
         user.watchlist.push(movie)
         await user.save()
 
