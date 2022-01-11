@@ -14,9 +14,8 @@ class MoviesService {
         }
     }
 
-    async getMoviesByPage(page, filter) {
+    async getMovies(page = 0, filter, itemInPage = 20) {
         try {
-
             const movies = await Movie.find(filter).skip(page * this.itemInPage).limit(this.itemInPage)
             const totalPage = Math.ceil(await this.getMoviesCount(filter) / 20 - 1)
             return {totalPage, itemInPage: this.itemInPage, movies}

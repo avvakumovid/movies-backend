@@ -13,12 +13,17 @@ class MoviesController {
 
     async getMovies(req, res) {
         try {
-            let filter = null
-            const {page, genreId} = req.query;
+            let filter = {};
+            const {page, genreId, title} = req.query;
             if (genreId) {
                 filter = {genre_ids: genreId}
             }
-            const movies = await MoviesService.getMoviesByPage(page, filter)
+            if (title) {
+               let tit = { $regex: `^${title}`, $options: 'im' }
+                filter = {...filter,...{title: tit}}
+            }
+            console.log(filter)
+            const movies = await MoviesService.getMovies(page, filter)
             return res.json(movies)
         } catch (e) {
             console.log(e)
