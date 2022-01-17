@@ -6,7 +6,7 @@ class MoviesService {
 
     async getAllMovies() {
         try {
-            const movies = await Movie.find({genre_ids: 28}).limit(4);
+            const movies = await Movie.find();
             return movies
         } catch (e) {
             console.log(e)
