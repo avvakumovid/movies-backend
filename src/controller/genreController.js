@@ -9,9 +9,9 @@ class GenreController {
 
     async getGenreById(req, res){
         const {id} = req.params
-        console.log(id)
+        // console.log(id)
         const genre = await GenreService.getGenreById(id)
-        console.log(genre)
+        // console.log(genre)
         if(!genre){
             res.status(403).json('Жанр не найден')
         }

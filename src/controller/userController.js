@@ -49,7 +49,7 @@ class UserController {
     async getUserById(req, res) {
         try {
             const userId = req.user.id
-            console.log(userId)
+            // console.log(userId)
             if (!userId) {
                 return res.status(403).json({message: 'Не указан id'})
             }
@@ -89,9 +89,9 @@ class UserController {
     async deleteMoviesFromWatchList(req, res) {
         try {
             const {userId, movieId} = req.query;
-            console.log(userId, movieId)
+            // console.log(userId, movieId)
             const response = await UserService.deleteMoviesFromWatchList(userId, movieId)
-            console.log(response)
+            // console.log(response)
             return res.json(response)
         } catch (e) {
             // console.log(e)

@@ -68,12 +68,9 @@ class UserService {
         }
         let findedMovie = user.watchlist.find(m => m.equals(movie._id))
         if(!(findedMovie)){
-            console.log('nop')
             throw new Error('Фильма нет в списке')
         }
-        console.log('bs')
         let idMovie = movie._id
-        console.log(idMovie)
         User.findByIdAndUpdate(
             userId,
             { $pull: { 'watchlist': movie._id } },function(err,model){});
