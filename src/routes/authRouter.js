@@ -10,7 +10,7 @@ check('username', 'Имя пользлваьеля не может быть пу
     check('password', 'Пароль должен быть больше 4 символов').isLength({min: 4})
 ], AuthController.registration)
 router.post('/login', AuthController.login)
-router.post('/auth', AuthController.auth)
+router.get('/auth', AuthController.auth)
 
 
 export default router
