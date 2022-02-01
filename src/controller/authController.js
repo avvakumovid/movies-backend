@@ -24,7 +24,6 @@ class AuthController {
             return res.status(400).json({message: 'Пользователь с таким username уже существует'})
         }
         const hashPawword = bcrypt.hashSync(password, 7)
-        //const role = new Role();
         const userRole = await RoleService.getRole('USER')
         const response = await UserService.createUser(username, hashPawword, userRole);
         return res.status(response.status).json(response.message)
@@ -32,9 +31,7 @@ class AuthController {
 
     async login(req, res) {
         try {
-
             const {username, password} = req.body
-
             const user = await UserService.getUser(username)
             if (!user) {
                 return res.status(400).json({message: `Пользователь ${username} не найден`})
@@ -49,6 +46,24 @@ class AuthController {
         } catch (e) {
             console.log(e)
             res.status(400).json({message: 'Login error'})
+        }
+    }
+
+    async auth(req, res) {
+        try {
+            const user = await UserService.getUserById(req.user.id)
+            const token = generateAccessToken(user._id, user.roles, user.watchlist)
+            return res.json({
+                token,
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    roles: user.roles,
+                    watchlist: user.watchlist
+                }
+            })
+        } catch (e) {
+            console.log(e)
         }
     }
 
