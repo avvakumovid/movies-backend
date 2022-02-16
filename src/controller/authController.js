@@ -26,7 +26,7 @@ class AuthController {
         const hashPawword = bcrypt.hashSync(password, 7)
         const userRole = await RoleService.getRole('USER')
         const response = await UserService.createUser(username, hashPawword, userRole);
-        return res.status(response.status).json(response.message)
+        return res.json(response)
     }
 
     async login(req, res) {
